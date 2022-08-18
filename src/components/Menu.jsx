@@ -1,0 +1,126 @@
+import React, { useState } from "react";
+import styled from "styled-components";
+
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import HomeIcon from "@mui/icons-material/Home";
+import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
+import HistoryIcon from "@mui/icons-material/History";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+
+import SettingsIcon from "@mui/icons-material/Settings";
+import LiveTvIcon from "@mui/icons-material/LiveTv";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { IconButton } from "@mui/material";
+
+const Container = styled.div`
+  flex: 1;
+  background-color: ${({ theme }) => theme.bg};
+  color: ${({ theme }) => theme.text};
+  font-size: 14px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  border-right: 1px solid black;
+`;
+const Wrapper = styled.div`
+  padding: 25px 25px;
+`;
+
+const Logo = styled.div`
+  font-size: 18px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+`;
+
+const Item = styled.div`
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+`;
+const ItemText = styled.div``;
+const Hr = styled.hr``;
+const LoginButton = styled.button`
+  margin-top: 20px;
+  height: 40px;
+  background-color: grey;
+  color: white;
+  border: 3px solid black;
+  width: 100px;
+  cursor: pointer;
+`;
+
+export default function Menu({ setdarkMode, darkMode }) {
+  let currentuser = useSelector((state) => state.user.currentuser);
+  const [videoadddialog, setvideoadddialog] = useState(false);
+
+  return (
+    <Container>
+      <Wrapper>
+        <Link style={{ textDecoration: "none" }} to="/">
+          <Logo>
+            <YouTubeIcon></YouTubeIcon>
+            SunilTube
+          </Logo>
+        </Link>
+        <Hr></Hr>
+        <Item>
+          <HomeIcon></HomeIcon>
+          <ItemText>Home</ItemText>
+        </Item>
+        <Link to="/trending">
+          <Item>
+            <WhatshotIcon></WhatshotIcon>
+            <ItemText>Trending</ItemText>
+          </Item>
+        </Link>
+
+        <Link to="/subscribed">
+          <Item>
+            <SubscriptionsIcon></SubscriptionsIcon>
+            <ItemText>Subscriptions</ItemText>
+          </Item>
+        </Link>
+        <Link to="/history">
+          <Item>
+            <HistoryIcon></HistoryIcon>
+            <ItemText>History </ItemText>
+          </Item>
+        </Link>
+        <IconButton style={{fontSize:'13px'}}
+          onClick={(ev) => {
+            setdarkMode(!darkMode);
+          }}
+        >
+          <DarkModeIcon></DarkModeIcon>
+          Dark Mode
+        </IconButton>
+
+        {currentuser ? (
+          currentuser.user.name
+        ) : (
+          <Link to="/login">
+            <LoginButton>Login</LoginButton>
+          </Link>
+        )}
+
+        <Link to="/settings">
+          <Item>
+            <SettingsIcon></SettingsIcon>
+            <ItemText>Settings</ItemText>
+          </Item>
+        </Link>
+
+        <Link to="/live">
+          <Item>
+            <LiveTvIcon></LiveTvIcon>
+            <ItemText>Live Tv</ItemText>
+          </Item>
+        </Link>
+      </Wrapper>
+    </Container>
+  );
+}

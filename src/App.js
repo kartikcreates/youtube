@@ -1,24 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import NavBar from "./components/NavBar";
+import Menu from "./components/Menu";
+import styled, { ThemeProvider } from "styled-components";
+import "./App.css";
+import { darktheme, lighttheme } from "./utils/Theme";
+
+import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import Home from "./Pages/Home";
+import VideoViewPage from "./Pages/VideoViewPage";
+import LoginPage from "./Pages/LoginPage";
+import { Provider } from "react-redux";
+import store from './redux/store'
+
+
+const Container = styled.div`
+  display: flex;
+`;
+const Main = styled.div`
+  flex: 7;
+  background-color: ${({ theme }) => theme.bg};
+  color:${({theme})=>theme.text}
+  font-size:14px;
+`;
+const Wrapper = styled.div``;
 
 function App() {
+  const [darkMode, setdarkMode] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+    <BrowserRouter>
+    <ThemeProvider theme={darkMode ? darktheme : lighttheme}>
+      <Container>
+        <Menu darkMode={darkMode} setdarkMode={setdarkMode} />
+        <Main>
+          <NavBar></NavBar>
+          <Wrapper>
+            <Routes>
+                <Route path='/'>
+                      <Route index element={<Home type="random"/>}></Route>
+
+                      <Route path="trending" element={<Home type="trending"/>}></Route>
+                      
+                      <Route path="subscribed" element={<Home type="subscribed"/>}></Route>
+
+                      <Route path="video/:videoid" element={<VideoViewPage/>}></Route>
+                      <Route path="login" element={<LoginPage/>}></Route>
+                                 
+
+
+                </Route>
+            </Routes>      
+            </Wrapper>
+        </Main>
+      </Container>
+    </ThemeProvider>
+    </BrowserRouter>
+    </Provider>
   );
 }
 
