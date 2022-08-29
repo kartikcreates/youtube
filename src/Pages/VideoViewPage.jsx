@@ -15,6 +15,8 @@ import { Button, TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import UserImg from "../components/UserImg";
+import { useSelector } from "react-redux";
+import Subscribebutton from "../components/Subscribebutton";
 
 const ViewandTime = styled.div`
   display: flex;
@@ -29,6 +31,27 @@ export default function VideoViewPage(props) {
   let [inputcomment, setinputcomment] = useState("");
   let [allcomments, setallcomments] = useState([]);
   console.log("video", videoid);
+  let [checksubscibe, setsubscribe] = useState(false);
+  console.log("jhgjhghkjgyguyguyguyg",videodata.userId);
+  const currentuser = useSelector((state) => state.user.currentuser);
+  console.log("userr", currentuser);
+
+
+    // if (currentuser != null) {
+    //   // const checksub=currentuser.user.subscribeduser.find()
+    //   if (
+    //     !currentuser.user.subscribedusers.find(
+    //       (elem) => elem === videodata.userId
+    //     )
+    //   ) {
+    //     setsubscribe(true);
+    //   } else {
+    //     setsubscribe(false);
+    //   }
+    // } else {
+    //   setsubscribe(false);
+    // }
+
 
   useEffect(() => {
     axios
@@ -78,7 +101,66 @@ export default function VideoViewPage(props) {
             Sorry, your browser doesn't support embedded videos.
           </video>
 
-          <h2>{videodata.title}</h2>
+          <div style={{ display: "flex", gap: "70%" }}>
+            <span style={{ fontSize: "30px" }}>{videodata.title}</span>
+
+
+<Subscribebutton currentuser={currentuser} userId={videodata.userId}></Subscribebutton>
+{/* 
+{()=>{
+ 
+}} */}
+              
+            {/* {checksubscibe ? (
+              <Button
+                variant="contained"
+                style={{ backgroundColor: "grey" }}
+                onClick={(e) => {
+                  e.target.style["background-color"] = "red";
+                  e.target.innerText = "subscribe";
+                  setsubscribe(false);
+
+                  axios
+                    .put(
+                      "http://localhost:8001/api/user/unsub/" +
+                        videodata.userId,
+                      {},
+                      { withCredentials: true }
+                    )
+                    .then((res) => {
+                      console.log(res.data);
+                    });
+                    setsubscribe(false);
+                }}
+              >
+                Unsubscibe
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                style={{ backgroundColor: "red" }}
+                onClick={(e) => {
+                 
+                  axios
+                    .put(
+                      "http://localhost:8001/api/user/sub/" +
+                        videodata.userId,
+                      {},
+                      { withCredentials: true }
+                    )
+                    .then((res) => {
+                      console.log(res.data);
+                    });
+
+                    setsubscribe(true);
+
+                }}
+              >
+                Subscribe
+              </Button>
+            )} */}
+          </div>
+
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <ViewandTime>
               <ViewsCount>{videodata.views} views</ViewsCount> •
@@ -142,8 +224,9 @@ export default function VideoViewPage(props) {
             {allcomments.map((elem) => {
               return (
                 <div key={elem._id}>
-
-                  <p><UserImg id={elem.userId}/> {elem.desc}</p>
+                  <p>
+                    <UserImg id={elem.userId} /> {elem.desc}
+                  </p>
                   <br></br>
                 </div>
               );

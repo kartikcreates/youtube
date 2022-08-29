@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { loginStart, loginFail, logout, loginSucces } from "../redux/userSlice";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
+import {SignupForm} from "../components/SignupForm";
 
 const Container = styled.div`
   height: 500px;
@@ -68,7 +69,7 @@ dispatch(loginStart())
   }
 
   return (
-    <div>
+    <div style={{display:'flex'}}>
       <Container>
         {isloading ? (
           <>loading....</>
@@ -91,7 +92,7 @@ dispatch(loginStart())
                 }}
               ></input>
               <br></br>
-              <input
+              <input value='Login'
                 type="submit"
                 onClick={(e) => {
                   login(e);
@@ -104,6 +105,8 @@ dispatch(loginStart())
           </div>
         )}
       </Container>
+
+      <SignupForm></SignupForm>
     </div>
   );
 }

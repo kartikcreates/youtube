@@ -50,7 +50,7 @@ export default function NavBar() {
 
       <IconButton onClick={handleClickOpen}><VideoCallIcon></VideoCallIcon></IconButton>
       {currentuser ? (
-        currentuser.user.name
+       <div><img src={currentuser.user.img} style={{height:'25px',width:'25px',borderRadius:'10px'}}></img>{currentuser.user.name}</div> 
       ) : (
         <Link to="/login">
           <LoginButton>Login</LoginButton>
