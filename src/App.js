@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "./components/NavBar";
-import Menu from "./components/Menu";
+// import Menu from "./components/Menu";
 import styled, { ThemeProvider } from "styled-components";
 import "./App.css";
 import { darktheme, lighttheme } from "./utils/Theme";
@@ -31,7 +31,7 @@ function App() {
     <BrowserRouter>
     <ThemeProvider theme={darkMode ? darktheme : lighttheme}>
       <Container>
-        <Menu darkMode={darkMode} setdarkMode={setdarkMode} />
+        {/* <Menu darkMode={darkMode} setdarkMode={setdarkMode} /> */}
         <Main>
           <NavBar></NavBar>
           <Wrapper>
@@ -45,8 +45,6 @@ function App() {
 
                       <Route path="video/:videoid" element={<VideoViewPage/>}></Route>
                       <Route path="login" element={<LoginPage/>}></Route>
-                                 
-
 
                 </Route>
             </Routes>      
