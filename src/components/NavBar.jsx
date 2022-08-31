@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -12,13 +11,11 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 
+import LoginIcon from '@mui/icons-material/Login';
+import Videodialog from "./Videodialog";
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import YouTube from "@mui/icons-material/YouTube";
@@ -93,7 +90,9 @@ const Drawer = styled(MuiDrawer, {
 
 export default function NavBar(props) {
   const theme = useTheme();
+  const currentuser = useSelector((state) => state.user.currentuser);
   const [open, setOpen] = React.useState(false);
+  const [openVideo, setOpenVideo] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -101,6 +100,10 @@ export default function NavBar(props) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleClickOpen = () => {
+    setOpenVideo(true);
   };
 
   return (
@@ -143,13 +146,24 @@ export default function NavBar(props) {
               color: "inherit",
               width: "65%",
               marginTop: "5px",
-              padding: "10px",
+              // padding: "10px",
               marginLeft: "10px",
             }}
             label="Search..."
             variant="outlined"
           />
+          <IconButton onClick={handleClickOpen}><VideoCallIcon></VideoCallIcon></IconButton>
+          {currentuser ? (
+            <div><img src={currentuser.user.img} style={{ height: '25px', width: '25px', borderRadius: '10px' }}></img>{currentuser.user.name}</div>
+          ) : (
+            <Link to="/login">
+              <IconButton>
+                <LoginIcon />
+              </IconButton>
+            </Link>
+          )}
         </Toolbar>
+        <Videodialog open={openVideo} setOpenVideo={setOpen}></Videodialog>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
