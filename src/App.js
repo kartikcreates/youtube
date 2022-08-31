@@ -33,7 +33,7 @@ function App() {
       <Container>
         {/* <Menu darkMode={darkMode} setdarkMode={setdarkMode} /> */}
         <Main>
-          <NavBar></NavBar>
+          {/* <NavBar></NavBar> */}
           <Wrapper>
             <Routes>
                 <Route path='/'>

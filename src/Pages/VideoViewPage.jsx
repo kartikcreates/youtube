@@ -7,7 +7,7 @@ import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ShareIcon from "@mui/icons-material/Share";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect,useRef } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { format } from "timeago.js";
@@ -17,6 +17,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import UserImg from "../components/UserImg";
 import { useSelector } from "react-redux";
 import Subscribebutton from "../components/Subscribebutton";
+import Gesture from '../gesture/Gesture';
 
 const ViewandTime = styled.div`
   display: flex;
@@ -51,7 +52,21 @@ export default function VideoViewPage(props) {
     // } else {
     //   setsubscribe(false);
     // }
+    let videoplayeref=useRef(null);
+    function gesturecontrol(type) {
 
+      if (type != '') {
+        console.log(videoplayeref)
+        switch (type) {
+          case 'full_hand_open':
+            videoplayeref.current.play();
+            break;
+          case 'victory':
+            videoplayeref.current.pause();
+            break;
+        }
+      }
+    }
 
   useEffect(() => {
     axios
@@ -160,6 +175,12 @@ export default function VideoViewPage(props) {
               </Button>
             )} */}
           </div>
+
+          {/**gestureeee componenet */}
+
+          <Gesture gesturefunc={gesturecontrol}></Gesture>
+
+
 
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <ViewandTime>

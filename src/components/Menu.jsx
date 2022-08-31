@@ -60,37 +60,47 @@ export default function Menu({ setdarkMode, darkMode }) {
   return (
     <Container>
       <Wrapper>
-        <Link  to="/" style={{ textDecoration: 'none',color:'inherit'}}>
+        {/* <Link  to="/" style={{ textDecoration: 'none',color:'inherit'}}>
           <Logo >
             <YouTubeIcon ></YouTubeIcon>
             SunilTube
           </Logo>
-        </Link>
-        <Hr></Hr>
+        </Link> */}
+        {/* <Hr></Hr> */}
         <Item>
           <HomeIcon></HomeIcon>
           <ItemText>Home</ItemText>
         </Item>
-        <Link to="/trending" style={{ textDecoration: 'none',color:'inherit'}}>
+        <Link
+          to="/trending"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <Item>
             <WhatshotIcon></WhatshotIcon>
             <ItemText>Trending</ItemText>
           </Item>
         </Link>
 
-        <Link to="/subscribed" style={{ textDecoration: 'none',color:'inherit'}}>
+        <Link
+          to="/subscribed"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <Item>
             <SubscriptionsIcon></SubscriptionsIcon>
             <ItemText>Subscriptions</ItemText>
           </Item>
         </Link>
-        <Link to="/history" style={{ textDecoration: 'none',color:'inherit'}}>
+        <Link
+          to="/history"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <Item>
             <HistoryIcon></HistoryIcon>
             <ItemText>History </ItemText>
           </Item>
         </Link>
-        <Item style={{fontSize:'13px'}}
+        <Item
+          style={{ fontSize: "13px" }}
           onClick={(ev) => {
             setdarkMode(!darkMode);
           }}
@@ -99,22 +109,28 @@ export default function Menu({ setdarkMode, darkMode }) {
           Dark Mode
         </Item>
 
-        {currentuser ? (
+        {/* {currentuser ? (
           currentuser.user.name
         ) : (
-          <Link to="/login" style={{ textDecoration: 'none',color:'inherit'}}>
+          <Link
+            to="/login"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             <LoginButton>Login</LoginButton>
           </Link>
-        )}
+        )} */}
 
-        <Link to="/settings" style={{ textDecoration: 'none',color:'inherit'}}>
+        <Link
+          to="/settings"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <Item>
             <SettingsIcon></SettingsIcon>
             <ItemText>Settings</ItemText>
           </Item>
         </Link>
 
-        <Link to="/live" style={{ textDecoration: 'none',color:'inherit'}}>
+        <Link to="/live" style={{ textDecoration: "none", color: "inherit" }}>
           <Item>
             <LiveTvIcon></LiveTvIcon>
             <ItemText>Live Tv</ItemText>
