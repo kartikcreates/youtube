@@ -11,6 +11,7 @@ import VideoViewPage from "./Pages/VideoViewPage";
 import LoginPage from "./Pages/LoginPage";
 import { Provider } from "react-redux";
 import store from './redux/store'
+import { SignupForm } from "./Pages/SignupForm";
 
 
 const Container = styled.div`
@@ -45,6 +46,7 @@ function App() {
 
                       <Route path="video/:videoid" element={<VideoViewPage/>}></Route>
                       <Route path="login" element={<LoginPage/>}></Route>
+                      <Route path="signup" element={<SignupForm/>}></Route>
 
                 </Route>
             </Routes>      
