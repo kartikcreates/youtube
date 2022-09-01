@@ -5,6 +5,20 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { uuidv4 } from "@firebase/util";
 import axios from "axios";
 
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 // A custom validation function. This must return an object
 // which keys are symmetrical to our values/initialValues
 const validate = (values) => {
@@ -34,6 +48,7 @@ const validate = (values) => {
   return errors;
 };
 
+const theme = createTheme();
 export const SignupForm = () => {
   // Pass the useFormik() hook initial form values, a validate function that will be called when
   // form values change or fields are blurred, and a submit function that will
@@ -53,26 +68,36 @@ export const SignupForm = () => {
       uploadBytes(imageref, mfile).then((snapshot) => {
         getDownloadURL(imageref).then((downloadUrl) => {
           console.log("file at" + downloadUrl);
-          axios.post(
-            "http://localhost:8001/api/auth/signup",
-            {
-              name: values.Name,
-              email: values.email,
-              password: values.password,
-              img: downloadUrl,
-            },
-            { withCredentials: true }
-          ).then((res)=>{ console.log(res.data)
-          alert(res.data)
-          });
+          axios
+            .post(
+              "http://localhost:8001/api/auth/signup",
+              {
+                name: values.Name,
+                email: values.email,
+                password: values.password,
+                img: downloadUrl,
+              },
+              { withCredentials: true }
+            )
+            .then((res) => {
+              console.log(res.data);
+              alert(res.data);
+            });
         });
       });
     },
   });
   return (
+    <ThemeProvider theme={theme}>
     <form onSubmit={formik.handleSubmit}>
+
+<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
       <label htmlFor="Name">Name</label>
-      <input
+      <TextField
+        fullWidth
+        autoComplete={false}
         id="Name"
         name="Name"
         type="text"
@@ -84,8 +109,10 @@ export const SignupForm = () => {
 
       <br></br>
       <label htmlFor="email">Email Address</label>
-      <input
+      <TextField
+        fullWidth
         id="email"
+        label="email"
         name="email"
         type="email"
         onChange={formik.handleChange}
@@ -94,10 +121,12 @@ export const SignupForm = () => {
       {formik.errors.email ? <div>{formik.errors.email}</div> : null}
       <br></br>
       <label htmlFor="password">Password</label>
-      <input
+      <TextField
+        fullWidth
         id="password"
         name="password"
         type="password"
+        label="Email Address"
         onChange={formik.handleChange}
         value={formik.values.password}
       />
@@ -116,7 +145,8 @@ export const SignupForm = () => {
       />
       {formik.errors.userimage ? <div>{formik.errors.userimage}</div> : null}
       <br></br>
-      <button type="submit">Signup</button>
+      <Button type="submit">Signup</Button>
     </form>
+    </ThemeProvider>
   );
 };

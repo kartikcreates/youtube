@@ -10,8 +10,10 @@ import Home from "./Pages/Home";
 import VideoViewPage from "./Pages/VideoViewPage";
 import LoginPage from "./Pages/LoginPage";
 import { Provider } from "react-redux";
-import store from './redux/store'
+import {store, persistor} from './redux/store'
 import { SignupForm } from "./Pages/SignupForm";
+import { PersistGate } from 'redux-persist/integration/react';
+
 
 
 const Container = styled.div`
@@ -29,6 +31,7 @@ function App() {
   const [darkMode, setdarkMode] = useState(false);
   return (
     <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
     <BrowserRouter>
     <ThemeProvider theme={darkMode ? darktheme : lighttheme}>
       <Container>
@@ -55,6 +58,7 @@ function App() {
       </Container>
     </ThemeProvider>
     </BrowserRouter>
+    </PersistGate>
     </Provider>
   );
 }
