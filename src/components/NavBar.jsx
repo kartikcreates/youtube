@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-
+import { useState } from "react";
 import LoginIcon from '@mui/icons-material/Login';
 import Videodialog from "./Videodialog";
 import VideoCallIcon from '@mui/icons-material/VideoCall';
@@ -93,6 +93,7 @@ export default function NavBar(props) {
   const currentuser = useSelector((state) => state.user.currentuser);
   const [open, setOpen] = React.useState(false);
   const [openVideo, setOpenVideo] = React.useState(false);
+  const [darkMode, setdarkMode] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,8 +110,9 @@ export default function NavBar(props) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} color="inherit">
+      <AppBar position="fixed" open={open} color="inherit" >
         <Toolbar>
+
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -121,9 +123,8 @@ export default function NavBar(props) {
               ...(open && { display: "none" }),
             }}
           >
-            <MenuIcon />
+            <MenuIcon darkMode={darkMode} setdarkMode={setdarkMode} />
           </IconButton>
-
           <Link
             to="/"
             style={{
@@ -136,7 +137,7 @@ export default function NavBar(props) {
           >
             <YouTube />
             <Typography variant="h6" noWrap component="div">
-              YouTube
+              VideoPlayer
             </Typography>
           </Link>
           <TextField
@@ -146,24 +147,24 @@ export default function NavBar(props) {
               color: "inherit",
               width: "65%",
               marginTop: "5px",
-              // padding: "10px",
               marginLeft: "10px",
             }}
             label="Search..."
             variant="outlined"
           />
-          <IconButton onClick={handleClickOpen}><VideoCallIcon></VideoCallIcon></IconButton>
+
+          <IconButton onClick={handleClickOpen} style={{ padding: "20px" }} ><VideoCallIcon ></VideoCallIcon></IconButton>
           {currentuser ? (
-            <div><img src={currentuser.user.img} style={{ height: '25px', width: '25px', borderRadius: '10px' }}></img>{currentuser.user.name}</div>
+            <div><img src={currentuser.user.img} alt={"img"} style={{ height: '25px', width: '25px', borderRadius: '10px' }}></img>{currentuser.user.name}</div>
           ) : (
             <Link to="/login">
-              <IconButton>
+              <IconButton style={{ padding: "20px" }}>
                 <LoginIcon />
               </IconButton>
             </Link>
           )}
         </Toolbar>
-        <Videodialog open={openVideo} setOpenVideo={setOpen}></Videodialog>
+        <Videodialog open={openVideo} setOpen={setOpenVideo}></Videodialog>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
@@ -185,69 +186,3 @@ export default function NavBar(props) {
     </Box>
   );
 }
-
-// -----------------------------------
-
-// import React from "react";
-// import SearchIcon from "@mui/icons-material/Search";
-// import styled from "styled-components";
-// import { useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
-// import VideoCallIcon from '@mui/icons-material/VideoCall';
-// import { IconButton } from "@mui/material";
-// import Videodialog from "./Videodialog";
-
-// const Container = styled.div`
-//   display: flex;
-//   padding: 10px 20px;
-//   gap: 30px;
-//   justify-content: center;
-//   position: sticky;
-//   top: 0;
-// `;
-// const LoginButton = styled.button`
-//   height: 30px;
-//   background-color: ${({ theme }) => theme.bg};
-//   color: ${({ theme }) => theme.text};
-//   border: 3px solid black;
-//   cursor: pointer;
-//   flex: 1;
-// `;
-// const SearchBar = styled.input`
-//   height: 25px;
-//   border-radius: 4px;
-//   flex: 4;
-// `;
-// const Item = styled.div`
-//   display: flex;
-//   gap: 10px;
-//   cursor: pointer;
-//   flex: 0.5;
-// `;
-// export default function NavBar() {
-//   const currentuser = useSelector((state) => state.user.currentuser);
-//   const [open, setOpen] = React.useState(false);
-
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
-//   return (
-//     <Container>
-//       <SearchBar type="text" placeholder="Search......"></SearchBar>
-//       <Item>
-//         <SearchIcon></SearchIcon>
-//       </Item>{" "}
-
-//       <IconButton onClick={handleClickOpen}><VideoCallIcon></VideoCallIcon></IconButton>
-//       {currentuser ? (
-//        <div><img src={currentuser.user.img} style={{height:'25px',width:'25px',borderRadius:'10px'}}></img>{currentuser.user.name}</div>
-//       ) : (
-//         <Link to="/login">
-//           <LoginButton>Login</LoginButton>
-//         </Link>
-//       )}
-
-//       <Videodialog open={open} setOpen={setOpen}></Videodialog>
-//     </Container>
-//   );
-// }

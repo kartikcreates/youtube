@@ -101,7 +101,7 @@ export default function Videodialog({ open, setOpen }) {
                 'state_changed',
                 null,
                 null,
-                function() {
+                function () {
 
 
                   getDownloadURL(uploadTaskimage.snapshot.ref).then(
@@ -113,10 +113,10 @@ export default function Videodialog({ open, setOpen }) {
                       console.log("desc", desc);
                       console.log("tags", tags);
 
-                      axios.post('http://localhost:8001/api/video/video',{"title":title,"desc":desc,"imgurl":downloadURLimg,"videourl":downloadURLvid},{withCredentials:true}).then((val)=>{
+                      axios.post('http://localhost:8001/api/video/video', { "title": title, "desc": desc, "imgurl": downloadURLimg, "videourl": downloadURLvid }, { withCredentials: true }).then((val) => {
                         console.log(val)
                         setOpen(false);
-                      }).catch((err)=>{
+                      }).catch((err) => {
                         console.log(err)
                       })
                     }
@@ -124,7 +124,7 @@ export default function Videodialog({ open, setOpen }) {
                   console.log('upload complete!');
                 });
 
-           
+
             }
           );
         }

@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
-import YouTubeIcon from "@mui/icons-material/YouTube";
 import HomeIcon from "@mui/icons-material/Home";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import HistoryIcon from "@mui/icons-material/History";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
+import ChatIcon from '@mui/icons-material/Chat';
 import SettingsIcon from "@mui/icons-material/Settings";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { IconButton } from "@mui/material";
 
 const Container = styled.div`
   flex: 1;
@@ -54,8 +52,8 @@ const LoginButton = styled.button`
 `;
 
 export default function Menu({ setdarkMode, darkMode }) {
-  let currentuser = useSelector((state) => state.user.currentuser);
-  const [videoadddialog, setvideoadddialog] = useState(false);
+  // let currentuser = useSelector((state) => state.user.currentuser);
+  // const [videoadddialog, setvideoadddialog] = useState(false);
 
   return (
     <Container>
@@ -103,6 +101,7 @@ export default function Menu({ setdarkMode, darkMode }) {
           style={{ fontSize: "13px" }}
           onClick={(ev) => {
             setdarkMode(!darkMode);
+            console.log(darkMode);
           }}
         >
           <DarkModeIcon></DarkModeIcon>
@@ -120,7 +119,7 @@ export default function Menu({ setdarkMode, darkMode }) {
           </Link>
         )} */}
 
-        <Link
+        {/* <Link
           to="/settings"
           style={{ textDecoration: "none", color: "inherit" }}
         >
@@ -128,12 +127,12 @@ export default function Menu({ setdarkMode, darkMode }) {
             <SettingsIcon></SettingsIcon>
             <ItemText>Settings</ItemText>
           </Item>
-        </Link>
+        </Link> */}
 
-        <Link to="/live" style={{ textDecoration: "none", color: "inherit" }}>
+        <Link to="/globalChat" style={{ textDecoration: "none", color: "inherit" }}>
           <Item>
-            <LiveTvIcon></LiveTvIcon>
-            <ItemText>Live Tv</ItemText>
+            <ChatIcon></ChatIcon>
+            <ItemText>Global Chat</ItemText>
           </Item>
         </Link>
       </Wrapper>

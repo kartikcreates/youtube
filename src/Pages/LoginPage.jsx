@@ -5,10 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { loginStart, loginFail, logout, loginSucces } from "../redux/userSlice";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
-import {SignupForm} from "../components/SignupForm";
+import { SignupForm } from "../components/SignupForm";
 import { Link } from "react-router-dom";
-
-
 
 
 
@@ -44,7 +42,7 @@ const theme = createTheme();
 
 export default function LoginPage() {
 
-    const [email, setemail] = useState("");
+  const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [isloading, setloading] = useState(false);
   const user = useSelector((state) => state.user);
@@ -52,7 +50,7 @@ export default function LoginPage() {
 
   function login() {
     dispatch(loginStart());
-   
+
     setloading(true);
     console.log(email, password);
 
@@ -79,19 +77,19 @@ export default function LoginPage() {
   }
 
   async function googlesignin() {
-dispatch(loginStart())
+    dispatch(loginStart())
     signInWithPopup(auth, provider).then((result) => {
       console.log(result);
 
-      axios.post('http://localhost:8001/api/auth/google',result,{withCredentials:true}).then((res)=>{
+      axios.post('http://localhost:8001/api/auth/google', result, { withCredentials: true }).then((res) => {
         console.log(res.data)
         dispatch(loginSucces(res.data))
       })
     })
-    .catch((err)=>{
-      dispatch(loginFail())
-      console.log(err);
-    })
+      .catch((err) => {
+        dispatch(loginFail())
+        console.log(err);
+      })
   }
 
 
@@ -99,7 +97,7 @@ dispatch(loginStart())
 
 
 
-  
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -135,7 +133,7 @@ dispatch(loginStart())
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate  sx={{ mt: 1 }}>
+            <Box component="form" noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -156,7 +154,7 @@ dispatch(loginStart())
                 id="password"
                 autoComplete="current-password"
               />
-             
+
               <Button
                 type="button"
                 fullWidth
@@ -177,7 +175,7 @@ dispatch(loginStart())
               </Button>
               <Grid container>
                 <Grid item xs>
-                 
+
                 </Grid>
                 <Grid item>
                   <Link to="/signup" >
@@ -185,7 +183,7 @@ dispatch(loginStart())
                   </Link>
                 </Grid>
               </Grid>
-             
+
             </Box>
           </Box>
         </Grid>

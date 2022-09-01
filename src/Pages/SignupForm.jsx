@@ -4,6 +4,9 @@ import { storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { uuidv4 } from "@firebase/util";
 import axios from "axios";
+import { TextField } from "@mui/material";
+import Avatar from '@mui/material/Avatar';
+import { lightBlue } from '@mui/material/colors';
 
 // A custom validation function. This must return an object
 // which keys are symmetrical to our values/initialValues
@@ -14,7 +17,7 @@ const validate = (values) => {
   } else if (values.Name.length > 15) {
     errors.Name = "Must be 15 characters or less";
 
-    
+
   }
 
   if (!values.password) {
@@ -64,61 +67,72 @@ export const SignupForm = () => {
               img: downloadUrl,
             },
             { withCredentials: true }
-          ).then((res)=>{ console.log(res.data)
-          alert(res.data)
+          ).then((res) => {
+            console.log(res.data)
+            alert(res.data)
           });
         });
       });
     },
   });
-  return (
-    <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="Name">Name</label>
-      <input
-        id="Name"
-        name="Name"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.Name}
-      />
-      {formik.errors.Name ? <div>{formik.errors.Name}</div> : null}
-      <br></br>
+  return (<>
 
-      <br></br>
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        value={formik.values.email}
-      />
-      {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-      <br></br>
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        onChange={formik.handleChange}
-        value={formik.values.password}
-      />
-      {formik.errors.password ? <div>{formik.errors.password}</div> : null}
-      <br></br>
+    <Avatar sx={{ bgcolor: lightBlue[500], width: 70 }} variant="square">
+      SignIn
+    </Avatar>
 
-      <br></br>
-      <label htmlFor="userimage">User Image</label>
-      <input
-        id="userimage"
-        name="userimage"
-        type="file"
-        accept="image/*"
-        onChange={formik.handleChange}
-        value={formik.values.userimage}
-      />
-      {formik.errors.userimage ? <div>{formik.errors.userimage}</div> : null}
-      <br></br>
-      <button type="submit">Signup</button>
-    </form>
+    <div style={{ width: "50%", margin: "auto", marginTop: "100px" }}>
+      <form onSubmit={formik.handleSubmit}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="Name">Name</label>
+          <TextField
+            id="Name"
+            name="Name"
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.Name}
+          />
+          {formik.errors.Name ? <div style={{ color: "red" }}>{formik.errors.Name}</div> : null}
+          <br></br>
+
+          <br></br>
+          <label htmlFor="email">Email Address</label>
+          <TextField
+            id="email"
+            name="email"
+            type="email"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
+          {formik.errors.email ? <div style={{ color: "red" }}>{formik.errors.email}</div> : null}
+          <br></br>
+          <label htmlFor="password">Password</label>
+          <TextField
+            id="password"
+            name="password"
+            type="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+          />
+          {formik.errors.password ? <div style={{ color: "red" }}>{formik.errors.password}</div> : null}
+          <br></br>
+
+          <br></br>
+          <label htmlFor="userimage">User Image</label>
+          <input
+            id="userimage"
+            name="userimage"
+            type="file"
+            accept="image/*"
+            onChange={formik.handleChange}
+            value={formik.values.userimage}
+          />
+          {formik.errors.userimage ? <div style={{ color: "red" }}>{formik.errors.userimage}</div> : null}
+          <br></br>
+          <button type="submit">Signup</button>
+        </div>
+      </form >
+    </div >
+  </>
   );
 };
