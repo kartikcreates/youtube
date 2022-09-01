@@ -10,10 +10,10 @@ import Home from "./Pages/Home";
 import VideoViewPage from "./Pages/VideoViewPage";
 import LoginPage from "./Pages/LoginPage";
 import { Provider } from "react-redux";
-import store from './redux/store'
+import { store, persistor } from './redux/store'
 import { SignupForm } from "./Pages/SignupForm";
+import { PersistGate } from 'redux-persist/integration/react';
 import GlobalChat from "./Pages/GlobalChat";
-
 
 const Container = styled.div`
   display: flex;
@@ -30,32 +30,34 @@ function App() {
   const [darkMode, setdarkMode] = useState(false);
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <ThemeProvider theme={darkMode ? darktheme : lighttheme}>
-          <Container>
-            {/* <Menu darkMode={darkMode} setdarkMode={setdarkMode} /> */}
-            <Main>
-              {/* <NavBar></NavBar> */}
-              <Wrapper>
-                <Routes>
-                  <Route path='/'>
-                    <Route index element={<Home type="random" />}></Route>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <ThemeProvider theme={darkMode ? darktheme : lighttheme}>
+            <Container>
+              {/* <Menu darkMode={darkMode} setdarkMode={setdarkMode} /> */}
+              <Main>
+                {/* <NavBar></NavBar> */}
+                <Wrapper>
+                  <Routes>
+                    <Route path='/'>
+                      <Route index element={<Home type="random" />}></Route>
 
-                    <Route path="trending" element={<Home type="trending" />}></Route>
+                      <Route path="trending" element={<Home type="trending" />}></Route>
 
-                    <Route path="subscribed" element={<Home type="subscribed" />}></Route>
+                      <Route path="subscribed" element={<Home type="subscribed" />}></Route>
 
-                    <Route path="video/:videoid" element={<VideoViewPage />}></Route>
-                    <Route path="login" element={<LoginPage />}></Route>
-                    <Route path="signup" element={<SignupForm />}></Route>
-                    <Route path="globalChat" element={<GlobalChat />}></Route>
-                  </Route>
-                </Routes>
-              </Wrapper>
-            </Main>
-          </Container>
-        </ThemeProvider>
-      </BrowserRouter>
+                      <Route path="video/:videoid" element={<VideoViewPage />}></Route>
+                      <Route path="login" element={<LoginPage />}></Route>
+                      <Route path="signup" element={<SignupForm />}></Route>
+
+                    </Route>
+                  </Routes>
+                </Wrapper>
+              </Main>
+            </Container>
+          </ThemeProvider>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   );
 }

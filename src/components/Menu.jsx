@@ -52,8 +52,8 @@ const LoginButton = styled.button`
 `;
 
 export default function Menu({ setdarkMode, darkMode }) {
-  // let currentuser = useSelector((state) => state.user.currentuser);
-  // const [videoadddialog, setvideoadddialog] = useState(false);
+  let currentuser = useSelector((state) => state.currentuser);
+  const [videoadddialog, setvideoadddialog] = useState(false);
 
   return (
     <Container>

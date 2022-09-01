@@ -14,7 +14,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useState } from "react";
 import LoginIcon from '@mui/icons-material/Login';
 import Videodialog from "./Videodialog";
-import VideoCallIcon from '@mui/icons-material/VideoCall';
+import VideoCallIcon from "@mui/icons-material/VideoCall";
 import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
@@ -90,7 +90,8 @@ const Drawer = styled(MuiDrawer, {
 
 export default function NavBar(props) {
   const theme = useTheme();
-  const currentuser = useSelector((state) => state.user.currentuser);
+  const currentuser = useSelector((state) => state.currentuser);
+  console.log("current", currentuser);
   const [open, setOpen] = React.useState(false);
   const [openVideo, setOpenVideo] = React.useState(false);
   const [darkMode, setdarkMode] = useState(false);
@@ -152,10 +153,9 @@ export default function NavBar(props) {
             label="Search..."
             variant="outlined"
           />
-
-          <IconButton onClick={handleClickOpen} style={{ padding: "20px" }} ><VideoCallIcon ></VideoCallIcon></IconButton>
+          <IconButton onClick={handleClickOpen}><VideoCallIcon></VideoCallIcon></IconButton>
           {currentuser ? (
-            <div><img src={currentuser.user.img} alt={"img"} style={{ height: '25px', width: '25px', borderRadius: '10px' }}></img>{currentuser.user.name}</div>
+            <div><img src={currentuser.user.img} style={{ height: '25px', width: '25px', borderRadius: '10px' }}></img>{currentuser.user.name}</div>
           ) : (
             <Link to="/login">
               <IconButton style={{ padding: "20px" }}>

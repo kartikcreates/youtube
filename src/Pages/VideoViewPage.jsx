@@ -7,7 +7,7 @@ import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ShareIcon from "@mui/icons-material/Share";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { useEffect,useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { format } from "timeago.js";
@@ -17,7 +17,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import UserImg from "../components/UserImg";
 import { useSelector } from "react-redux";
 import Subscribebutton from "../components/Subscribebutton";
-import Gesture from '../gesture/Gesture';
+import Gesture from "../gesture/Gesture";
 
 const ViewandTime = styled.div`
   display: flex;
@@ -33,40 +33,38 @@ export default function VideoViewPage(props) {
   let [allcomments, setallcomments] = useState([]);
   console.log("video", videoid);
   let [checksubscibe, setsubscribe] = useState(false);
-  console.log("jhgjhghkjgyguyguyguyg",videodata.userId);
-  const currentuser = useSelector((state) => state.user.currentuser);
+  console.log("jhgjhghkjgyguyguyguyg", videodata.userId);
+  const currentuser = useSelector((state) => state.currentuser);
   console.log("userr", currentuser);
 
-
-    // if (currentuser != null) {
-    //   // const checksub=currentuser.user.subscribeduser.find()
-    //   if (
-    //     !currentuser.user.subscribedusers.find(
-    //       (elem) => elem === videodata.userId
-    //     )
-    //   ) {
-    //     setsubscribe(true);
-    //   } else {
-    //     setsubscribe(false);
-    //   }
-    // } else {
-    //   setsubscribe(false);
-    // }
-    let videoplayeref=useRef(null);
-    function gesturecontrol(type) {
-
-      if (type != '') {
-        console.log(videoplayeref)
-        switch (type) {
-          case 'full_hand_open':
-            videoplayeref.current.play();
-            break;
-          case 'victory':
-            videoplayeref.current.pause();
-            break;
-        }
+  // if (currentuser != null) {
+  //   // const checksub=currentuser.user.subscribeduser.find()
+  //   if (
+  //     !currentuser.user.subscribedusers.find(
+  //       (elem) => elem === videodata.userId
+  //     )
+  //   ) {
+  //     setsubscribe(true);
+  //   } else {
+  //     setsubscribe(false);
+  //   }
+  // } else {
+  //   setsubscribe(false);
+  // }
+  let videoplayeref = useRef(null);
+  function gesturecontrol(type) {
+    if (type != "") {
+      console.log(videoplayeref);
+      switch (type) {
+        case "full_hand_open":
+          videoplayeref.current.play();
+          break;
+        case "victory":
+          videoplayeref.current.pause();
+          break;
       }
     }
+  }
 
   useEffect(() => {
     axios
@@ -119,13 +117,15 @@ export default function VideoViewPage(props) {
           <div style={{ display: "flex", gap: "70%" }}>
             <span style={{ fontSize: "30px" }}>{videodata.title}</span>
 
-
-<Subscribebutton currentuser={currentuser} userId={videodata.userId}></Subscribebutton>
-{/* 
+            <Subscribebutton
+              currentuser={currentuser}
+              userId={videodata.userId}
+            ></Subscribebutton>
+            {/* 
 {()=>{
  
 }} */}
-              
+
             {/* {checksubscibe ? (
               <Button
                 variant="contained"
@@ -179,8 +179,6 @@ export default function VideoViewPage(props) {
           {/**gestureeee componenet */}
 
           <Gesture gesturefunc={gesturecontrol}></Gesture>
-
-
 
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <ViewandTime>
