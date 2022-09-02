@@ -11,8 +11,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useState } from "react";
-import LoginIcon from '@mui/icons-material/Login';
+
+import LoginIcon from "@mui/icons-material/Login";
 import Videodialog from "./Videodialog";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
 import { useSelector } from "react-redux";
@@ -20,6 +20,8 @@ import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import YouTube from "@mui/icons-material/YouTube";
 import Menu from "./Menu";
+import { Button } from "@mui/material";
+import { useState } from "react";
 
 const drawerWidth = 200;
 
@@ -91,10 +93,10 @@ const Drawer = styled(MuiDrawer, {
 export default function NavBar(props) {
   const theme = useTheme();
   const currentuser = useSelector((state) => state.currentuser);
-  // console.log("current", currentuser);
+  console.log("current", currentuser);
   const [open, setOpen] = React.useState(false);
   const [openVideo, setOpenVideo] = React.useState(false);
-  // const [darkMode, setdarkMode] = useState(false);
+  const [searchterm, setsearchterm] = useState('');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -108,12 +110,19 @@ export default function NavBar(props) {
     setOpenVideo(true);
   };
 
+  async function searchvideos() {
+
+
+
+  }
+
+  const videoswithsearchterm = React.cloneElement(props.children, { search: searchterm, searchvideos: searchvideos });
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} color="inherit" >
+      <AppBar position="fixed" open={open} color="inherit">
         <Toolbar>
-
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -126,6 +135,7 @@ export default function NavBar(props) {
           >
             <MenuIcon />
           </IconButton>
+
           <Link
             to="/"
             style={{
@@ -138,37 +148,43 @@ export default function NavBar(props) {
           >
             <YouTube />
             <Typography variant="h6" noWrap component="div">
-              VideoPlayer
+              YouTube
             </Typography>
           </Link>
           <TextField
             size="small"
+            onChange={(e) => { setsearchterm(e.target.value) }}
             id="outlined-basic"
             style={{
               color: "inherit",
               width: "65%",
               marginTop: "5px",
+              // padding: "10px",
               marginLeft: "10px",
             }}
             label="Search..."
             variant="outlined"
           />
-          <IconButton onClick={handleClickOpen}><VideoCallIcon></VideoCallIcon></IconButton>
-
+          <Button onClick={searchvideos} >Search</Button>
+          <IconButton onClick={handleClickOpen}>
+            <VideoCallIcon></VideoCallIcon>
+          </IconButton>
           {currentuser ? (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
-              <img alt="vedioPicture" src={currentuser.user.img} style={{ height: '25px', width: '25px', borderRadius: '10px' }}></img>
+            <div>
+              <img
+                src={currentuser.user.img}
+                style={{ height: "25px", width: "25px", borderRadius: "10px" }}></img>
               {currentuser.user.name}
             </div>
           ) : (
             <Link to="/login">
-              <IconButton style={{ padding: "20px" }}>
+              <IconButton>
                 <LoginIcon />
               </IconButton>
             </Link>
           )}
         </Toolbar>
-        <Videodialog open={openVideo} setOpen={setOpenVideo}></Videodialog>
+        <Videodialog open={openVideo} setOpenVideo={setOpen}></Videodialog>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
@@ -181,12 +197,79 @@ export default function NavBar(props) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Menu darkMode={props.darkMode} setdarkMode={props.setdarkMode} />
+        <Menu />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {props.children}
+        {videoswithsearchterm}
+        {console.log(props.children)}
       </Box>
-    </Box >
+    </Box>
   );
 }
+
+// -----------------------------------
+
+// import React from "react";
+// import SearchIcon from "@mui/icons-material/Search";
+// import styled from "styled-components";
+// import { useSelector } from "react-redux";
+// import { Link } from "react-router-dom";
+// import VideoCallIcon from '@mui/icons-material/VideoCall';
+// import { IconButton } from "@mui/material";
+// import Videodialog from "./Videodialog";
+
+// const Container = styled.div`
+//   display: flex;
+//   padding: 10px 20px;
+//   gap: 30px;
+//   justify-content: center;
+//   position: sticky;
+//   top: 0;
+// `;
+// const LoginButton = styled.button`
+//   height: 30px;
+//   background-color: ${({ theme }) => theme.bg};
+//   color: ${({ theme }) => theme.text};
+//   border: 3px solid black;
+//   cursor: pointer;
+//   flex: 1;
+// `;
+// const SearchBar = styled.input`
+//   height: 25px;
+//   border-radius: 4px;
+//   flex: 4;
+// `;
+// const Item = styled.div`
+//   display: flex;
+//   gap: 10px;
+//   cursor: pointer;
+//   flex: 0.5;
+// `;
+// export default function NavBar() {
+//   const currentuser = useSelector((state) => state.user.currentuser);
+//   const [open, setOpen] = React.useState(false);
+
+//   const handleClickOpen = () => {
+//     setOpen(true);
+//   };
+//   return (
+//     <Container>
+//       <SearchBar type="text" placeholder="Search......"></SearchBar>
+//       <Item>
+//         <SearchIcon></SearchIcon>
+//       </Item>{" "}
+
+//       <IconButton onClick={handleClickOpen}><VideoCallIcon></VideoCallIcon></IconButton>
+//       {currentuser ? (
+//        <div><img src={currentuser.user.img} style={{height:'25px',width:'25px',borderRadius:'10px'}}></img>{currentuser.user.name}</div>
+//       ) : (
+//         <Link to="/login">
+//           <LoginButton>Login</LoginButton>
+//         </Link>
+//       )}
+
+//       <Videodialog open={open} setOpen={setOpen}></Videodialog>
+//     </Container>
+//   );
+// }

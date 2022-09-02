@@ -2,11 +2,11 @@ import React from "react";
 import VideoUrl from "../public/samplevideo.mp4";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ShareIcon from "@mui/icons-material/Share";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import axios from "axios";
@@ -26,12 +26,7 @@ const ViewandTime = styled.div`
 `;
 const ViewsCount = styled.div``;
 const UploadTime = styled.div``;
-
-
-
 export default function VideoViewPage(props) {
-
-
   let [videodata, setvideodata] = useState({});
   let { videoid } = useParams();
   let [inputcomment, setinputcomment] = useState("");
@@ -41,9 +36,7 @@ export default function VideoViewPage(props) {
   console.log("jhgjhghkjgyguyguyguyg", videodata.userId);
   const currentuser = useSelector((state) => state.currentuser);
   console.log("userr", currentuser);
-  const [like, setLike] = useState(false);
-  const [dislike, setDislike] = useState(false);
-
+  let navigate = useNavigate();
   // if (currentuser != null) {
   //   // const checksub=currentuser.user.subscribeduser.find()
   //   if (
@@ -58,23 +51,17 @@ export default function VideoViewPage(props) {
   // } else {
   //   setsubscribe(false);
   // }
-  let videoplayeref = useRef();
-
+  let videoplayeref = useRef(null);
   function gesturecontrol(type) {
-    if (type !== "") {
+    if (type != "") {
       console.log(videoplayeref);
       switch (type) {
         case "full_hand_open":
           videoplayeref.current.play();
-
           break;
         case "victory":
           videoplayeref.current.pause();
           break;
-        default: videoplayeref.current.play();
-          break;
-        // case "thumbs_up":
-        // break;
       }
     }
   }
@@ -114,24 +101,6 @@ export default function VideoViewPage(props) {
         setallcomments(res.data);
       });
   }, [videoid]);
-
-
-  const handleLike = () => {
-    if (dislike) {
-      setLike(!like);
-      setDislike(!dislike);
-    }
-    setLike(!like)
-  }
-
-  const handleDislike = () => {
-    if (like) {
-      setDislike(!dislike);
-      setLike(!like);
-    }
-    setDislike(!dislike);
-  }
-
   return (
     <>
       <div
@@ -141,7 +110,7 @@ export default function VideoViewPage(props) {
         }}
       >
         <div>
-          <video ref={videoplayeref} onPlay={(e) => { }} id="videoplayer" controls width="720">
+          <video onPlay={(e) => { }} id="videoplayer" controls width="720">
             Sorry, your browser doesn't support embedded videos.
           </video>
 
@@ -154,7 +123,7 @@ export default function VideoViewPage(props) {
             ></Subscribebutton>
             {/* 
 {()=>{
-
+ 
 }} */}
 
             {/* {checksubscibe ? (
@@ -186,7 +155,7 @@ export default function VideoViewPage(props) {
                 variant="contained"
                 style={{ backgroundColor: "red" }}
                 onClick={(e) => {
-
+                 
                   axios
                     .put(
                       "http://localhost:8001/api/user/sub/" +
@@ -219,10 +188,9 @@ export default function VideoViewPage(props) {
 
             <div>
               {" "}
-              {like ? <ThumbUpAltIcon onClick={handleLike}></ThumbUpAltIcon> : <ThumbUpOffAltIcon onClick={handleLike}></ThumbUpOffAltIcon>}
+              <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
               {videodata.likes ? videodata.likes.length : 0}
-
-              {dislike ? <ThumbDownAltIcon onClick={handleDislike} ></ThumbDownAltIcon> : <ThumbDownOffAltIcon onClick={handleDislike} ></ThumbDownOffAltIcon>}
+              <ThumbDownOffAltIcon></ThumbDownOffAltIcon>
               {videodata.dislikes ? videodata.dislikes.length : 0}
               <ShareIcon></ShareIcon>
             </div>
@@ -262,6 +230,8 @@ export default function VideoViewPage(props) {
                   .then((res) => console.log(res.data))
                   .catch((err) => {
                     console.log(err);
+                    navigate('/login');
+
                   });
                 setinputcomment("");
               }}
