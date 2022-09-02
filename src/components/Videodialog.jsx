@@ -17,6 +17,8 @@ import {
 } from "firebase/storage";
 import { uuidv4 } from "@firebase/util";
 import axios from "axios";
+
+
 export default function Videodialog({ open, setOpen }) {
   const [title, settitle] = React.useState("");
   const [desc, setdesc] = React.useState("");
@@ -53,6 +55,8 @@ export default function Videodialog({ open, setOpen }) {
             case "running":
               console.log("Upload is running");
               break;
+            default:
+              console.log("default");
           }
         },
         (error) => {
@@ -86,6 +90,8 @@ export default function Videodialog({ open, setOpen }) {
             case "running":
               console.log("Upload is running");
               break;
+            default:
+              console.log("default");
           }
         },
         (error) => {

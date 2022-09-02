@@ -12,6 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
+import SearchIcon from '@mui/icons-material/Search';
 import LoginIcon from "@mui/icons-material/Login";
 import Videodialog from "./Videodialog";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
@@ -111,9 +112,6 @@ export default function NavBar(props) {
   };
 
   async function searchvideos() {
-
-
-
   }
 
   const videoswithsearchterm = React.cloneElement(props.children, { search: searchterm, searchvideos: searchvideos });
@@ -165,13 +163,19 @@ export default function NavBar(props) {
             label="Search..."
             variant="outlined"
           />
-          <Button onClick={searchvideos} >Search</Button>
-          <IconButton onClick={handleClickOpen}>
+          <IconButton onClick={searchvideos}>
+            <SearchIcon />
+          </IconButton>
+          {/* <Button onClick={searchvideos} >Search</Button> */}
+          <IconButton onClick={handleClickOpen} style={{ margin: "0 15px" }} >
             <VideoCallIcon></VideoCallIcon>
           </IconButton>
           {currentuser ? (
-            <div>
-              <img
+            <div style={{
+              display: "flex", justifyContent: "center",
+              alignItems: "center",
+            }}>
+              <img alt="im"
                 src={currentuser.user.img}
                 style={{ height: "25px", width: "25px", borderRadius: "10px" }}></img>
               {currentuser.user.name}
@@ -184,7 +188,7 @@ export default function NavBar(props) {
             </Link>
           )}
         </Toolbar>
-        <Videodialog open={openVideo} setOpenVideo={setOpen}></Videodialog>
+        <Videodialog open={openVideo} setOpen={setOpenVideo}></Videodialog>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>

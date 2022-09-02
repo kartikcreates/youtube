@@ -11,8 +11,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useContext } from "react";
-import { DarkModeContext } from "../App";
+// import { useContext } from "react";
+// import { DarkModeContext } from "../App";
 
 const Container = styled.div`
   flex: 1;
@@ -55,8 +55,8 @@ const LoginButton = styled.button`
 
 export default function Menu() {
   let currentuser = useSelector((state) => state.currentuser);
-  const [videoadddialog, setvideoadddialog] = useState(false);
-  const { darkMode, setdarkMode } = useContext(DarkModeContext);
+  // const [videoadddialog, setvideoadddialog] = useState(false);
+  // const { darkMode, setdarkMode } = useContext(DarkModeContext);
 
   return (
     <Container>
@@ -68,10 +68,12 @@ export default function Menu() {
           </Logo>
         </Link> */}
         {/* <Hr></Hr> */}
-        <Item>
-          <HomeIcon></HomeIcon>
-          <ItemText>Home</ItemText>
-        </Item>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }} >
+          <Item>
+            <HomeIcon></HomeIcon>
+            <ItemText>Home</ItemText>
+          </Item>
+        </Link>
         <Link
           to="/trending"
           style={{ textDecoration: "none", color: "inherit" }}
@@ -103,8 +105,8 @@ export default function Menu() {
         <Item
           style={{ fontSize: "13px" }}
           onClick={(ev) => {
-            setdarkMode(!darkMode);
-            console.log(darkMode);
+            // setdarkMode(!darkMode);
+            // console.log(darkMode);
           }}
         >
           <DarkModeIcon></DarkModeIcon>
