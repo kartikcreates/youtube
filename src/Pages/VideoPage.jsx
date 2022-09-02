@@ -10,6 +10,9 @@ export default function VideoPage(props) {
 
   
   useEffect(() => {
+
+    console.log("type of prop",props.type,props.searchterm)
+    if(props.searchterm==='' || props.searchterm===undefined){
  
     
     
@@ -19,7 +22,23 @@ export default function VideoPage(props) {
         console.log(videos);
         setVideos(videos);
       });
-  }, [props.type]);
+
+
+ }else{
+
+  
+
+ } }, [props.type]);
+ useEffect(()=>{
+fetch("http://localhost:8001/api/video/search?q="+props.search,{credentials:'include'})
+  .then((res) => res.json())
+  .then((videos) => {
+    console.log(videos);
+    setVideos(videos);
+  });
+ },[props.search])
+ console.log("videos : ",Videos)
+
   return (
     <div
       style={{
@@ -32,7 +51,6 @@ export default function VideoPage(props) {
         return (
           <Link key={video._id} style={{ textDecoration: "none" }} to={"/video/"+video._id}>
             <VideoBox  videodata={video}></VideoBox>
-
           </Link>
         );
       })}

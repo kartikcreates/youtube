@@ -20,6 +20,8 @@ import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import YouTube from "@mui/icons-material/YouTube";
 import Menu from "./Menu";
+import { Button } from "@mui/material";
+import { useState } from "react";
 
 const drawerWidth = 200;
 
@@ -94,6 +96,7 @@ export default function NavBar(props) {
   console.log("current", currentuser);
   const [open, setOpen] = React.useState(false);
   const [openVideo, setOpenVideo] = React.useState(false);
+  const [searchterm,setsearchterm]=useState('');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -106,6 +109,14 @@ export default function NavBar(props) {
   const handleClickOpen = () => {
     setOpenVideo(true);
   };
+
+  async function searchvideos(){
+
+
+ 
+  }
+
+ const videoswithsearchterm= React.cloneElement(props.children,{search:searchterm,searchvideos:searchvideos});
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -142,6 +153,7 @@ export default function NavBar(props) {
           </Link>
           <TextField
             size="small"
+            onChange={(e)=>{setsearchterm(e.target.value)}}
             id="outlined-basic"
             style={{
               color: "inherit",
@@ -153,6 +165,7 @@ export default function NavBar(props) {
             label="Search..."
             variant="outlined"
           />
+          <Button onClick={searchvideos} >Search</Button>
           <IconButton onClick={handleClickOpen}>
             <VideoCallIcon></VideoCallIcon>
           </IconButton>
@@ -160,8 +173,7 @@ export default function NavBar(props) {
             <div>
               <img
                 src={currentuser.user.img}
-                style={{ height: "25px", width: "25px", borderRadius: "10px" }}
-              ></img>
+                style={{ height: "25px", width: "25px", borderRadius: "10px" }}></img>
               {currentuser.user.name}
             </div>
           ) : (
@@ -189,7 +201,8 @@ export default function NavBar(props) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {props.children}
+        {videoswithsearchterm}
+        {console.log(props.children)}
       </Box>
     </Box>
   );

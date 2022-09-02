@@ -6,7 +6,7 @@ import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ShareIcon from "@mui/icons-material/Share";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import axios from "axios";
@@ -36,7 +36,7 @@ export default function VideoViewPage(props) {
   console.log("jhgjhghkjgyguyguyguyg", videodata.userId);
   const currentuser = useSelector((state) => state.currentuser);
   console.log("userr", currentuser);
-
+  let navigate=useNavigate();
   // if (currentuser != null) {
   //   // const checksub=currentuser.user.subscribeduser.find()
   //   if (
@@ -230,6 +230,8 @@ export default function VideoViewPage(props) {
                   .then((res) => console.log(res.data))
                   .catch((err) => {
                     console.log(err);
+                    navigate('/login');
+
                   });
                 setinputcomment("");
               }}
