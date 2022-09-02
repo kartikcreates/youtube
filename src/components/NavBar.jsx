@@ -91,10 +91,10 @@ const Drawer = styled(MuiDrawer, {
 export default function NavBar(props) {
   const theme = useTheme();
   const currentuser = useSelector((state) => state.currentuser);
-  console.log("current", currentuser);
+  // console.log("current", currentuser);
   const [open, setOpen] = React.useState(false);
   const [openVideo, setOpenVideo] = React.useState(false);
-  const [darkMode, setdarkMode] = useState(false);
+  // const [darkMode, setdarkMode] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -124,7 +124,7 @@ export default function NavBar(props) {
               ...(open && { display: "none" }),
             }}
           >
-            <MenuIcon darkMode={darkMode} setdarkMode={setdarkMode} />
+            <MenuIcon />
           </IconButton>
           <Link
             to="/"
@@ -154,8 +154,12 @@ export default function NavBar(props) {
             variant="outlined"
           />
           <IconButton onClick={handleClickOpen}><VideoCallIcon></VideoCallIcon></IconButton>
+
           {currentuser ? (
-            <div><img src={currentuser.user.img} style={{ height: '25px', width: '25px', borderRadius: '10px' }}></img>{currentuser.user.name}</div>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
+              <img alt="vedioPicture" src={currentuser.user.img} style={{ height: '25px', width: '25px', borderRadius: '10px' }}></img>
+              {currentuser.user.name}
+            </div>
           ) : (
             <Link to="/login">
               <IconButton style={{ padding: "20px" }}>
@@ -177,12 +181,12 @@ export default function NavBar(props) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Menu />
+        <Menu darkMode={props.darkMode} setdarkMode={props.setdarkMode} />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         {props.children}
       </Box>
-    </Box>
+    </Box >
   );
 }

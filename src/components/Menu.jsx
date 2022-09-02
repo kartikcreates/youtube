@@ -11,6 +11,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useContext } from "react";
+import { DarkModeContext } from "../App";
 
 const Container = styled.div`
   flex: 1;
@@ -51,9 +53,10 @@ const LoginButton = styled.button`
   cursor: pointer;
 `;
 
-export default function Menu({ setdarkMode, darkMode }) {
+export default function Menu() {
   let currentuser = useSelector((state) => state.currentuser);
   const [videoadddialog, setvideoadddialog] = useState(false);
+  const { darkMode, setdarkMode } = useContext(DarkModeContext);
 
   return (
     <Container>
