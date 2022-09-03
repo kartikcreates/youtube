@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import VideoBox from "../components/VideoBox";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 export default function VideoPage(props) {
   const [Videos, setVideos] = useState([]);
   let location = useParams();
   console.log("params", location)
-
+  let navigate=useNavigate();
 
   useEffect(() => {
 
@@ -19,8 +19,14 @@ export default function VideoPage(props) {
       fetch("http://localhost:8001/api/video/" + props.type, { credentials: 'include' })
         .then((res) => res.json())
         .then((videos) => {
-          console.log(videos);
+          console.log("here is message",videos);
+          if(videos==="not authenticated"){
+           return navigate('/login');
+          }
           setVideos(videos);
+        }).catch((err)=>{
+          console.log("errrrroooor",err)
+
         });
 
 
@@ -38,7 +44,7 @@ export default function VideoPage(props) {
         setVideos(videos);
       });
   }, [props.search])
-  console.log("videos : ", Videos)
+  console.log("videos are this: ", Videos)
 
   return (
     <div

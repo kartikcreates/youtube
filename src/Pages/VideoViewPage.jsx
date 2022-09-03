@@ -230,6 +230,10 @@ export default function VideoViewPage(props) {
                   .then((res) => console.log(res.data))
                   .catch((err) => {
                     console.log(err);
+                    console.log(err.response.data.message)
+                    if(err.response.data.message=="Comments validation failed: desc: Path `desc` is required."){
+                        return alert('enter some content to comment');
+                    }
                     navigate('/login');
 
                   });

@@ -6,7 +6,7 @@ import { loginStart, loginFail, logout, loginSucces } from "../redux/userSlice";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 import { SignupForm } from "../components/SignupForm";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 
 
@@ -49,6 +49,7 @@ export default function LoginPage() {
   const [isloading, setloading] = useState(false);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+ let navigate=useNavigate();
 
   function login() {
     dispatch(loginStart());
@@ -69,6 +70,7 @@ export default function LoginPage() {
           dispatch(loginFail());
         } else {
           dispatch(loginSucces(res.data));
+          Navigate('/')
         }
         setloading(false);
       })
