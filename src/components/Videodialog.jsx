@@ -129,8 +129,6 @@ export default function Videodialog({ open, setOpen }) {
                   );
                   console.log('upload complete!');
                 });
-
-
             }
           );
         }

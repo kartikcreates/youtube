@@ -23,6 +23,9 @@ import YouTube from "@mui/icons-material/YouTube";
 import Menu from "./Menu";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import { useContext } from "react";
+import { DarkModeContext } from "../App";
+
 
 const drawerWidth = 200;
 
@@ -92,12 +95,14 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function NavBar(props) {
+
   const theme = useTheme();
   const currentuser = useSelector((state) => state.currentuser);
   console.log("current", currentuser);
   const [open, setOpen] = React.useState(false);
   const [openVideo, setOpenVideo] = React.useState(false);
   const [searchterm, setsearchterm] = useState('');
+  const { darkMode } = useContext(DarkModeContext);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -119,7 +124,7 @@ export default function NavBar(props) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} color="inherit">
+      <AppBar position="fixed" open={open} color="transparent">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -190,8 +195,8 @@ export default function NavBar(props) {
         </Toolbar>
         <Videodialog open={openVideo} setOpen={setOpenVideo}></Videodialog>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
+      <Drawer variant="permanent" open={open} >
+        <DrawerHeader style={{ backgroundColor: `${darkMode ? '#242422' : ''}` }}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
