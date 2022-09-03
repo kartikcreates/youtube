@@ -6,18 +6,22 @@ import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ShareIcon from "@mui/icons-material/Share";
 import styled from "styled-components";
+
+
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { format } from "timeago.js";
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import UserImg from "../components/UserImg";
 import { useSelector } from "react-redux";
 import Subscribebutton from "../components/Subscribebutton";
 import Gesture from "../gesture/Gesture";
+
+
 
 const ViewandTime = styled.div`
   display: flex;
@@ -26,7 +30,12 @@ const ViewandTime = styled.div`
 `;
 const ViewsCount = styled.div``;
 const UploadTime = styled.div``;
+
+
 export default function VideoViewPage(props) {
+  const [like, setLike] = useState(false);
+  const [dislike, setDislike] = useState(false);
+
   let [videodata, setvideodata] = useState({});
   let { videoid } = useParams();
   let [inputcomment, setinputcomment] = useState("");
@@ -101,6 +110,15 @@ export default function VideoViewPage(props) {
         setallcomments(res.data);
       });
   }, [videoid]);
+
+  const handleLike = () => {
+    setLike(!like);
+  }
+
+  const handleDislike = () => {
+    setDislike(!dislike);
+  }
+
   return (
     <>
       <div
@@ -123,7 +141,7 @@ export default function VideoViewPage(props) {
             ></Subscribebutton>
             {/* 
 {()=>{
- 
+
 }} */}
 
             {/* {checksubscibe ? (
@@ -155,7 +173,7 @@ export default function VideoViewPage(props) {
                 variant="contained"
                 style={{ backgroundColor: "red" }}
                 onClick={(e) => {
-                 
+
                   axios
                     .put(
                       "http://localhost:8001/api/user/sub/" +
@@ -188,9 +206,14 @@ export default function VideoViewPage(props) {
 
             <div>
               {" "}
-              <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
+              <IconButton onClick={handleLike}>
+                {like ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
+              </IconButton>
               {videodata.likes ? videodata.likes.length : 0}
-              <ThumbDownOffAltIcon></ThumbDownOffAltIcon>
+
+              <IconButton onClick={handleDislike}>
+                {dislike ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />}
+              </IconButton>
               {videodata.dislikes ? videodata.dislikes.length : 0}
               <ShareIcon></ShareIcon>
             </div>
