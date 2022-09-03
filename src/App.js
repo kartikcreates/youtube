@@ -25,42 +25,43 @@ const Main = styled.div`
 `;
 const Wrapper = styled.div``;
 
-// let DarkModeContext;
+let DarkModeContext;
 
 function App() {
   const [darkMode, setdarkMode] = useState(false);
-  // DarkModeContext = createContext();
+  DarkModeContext = createContext();
   document.body.style.backgroundColor = darkMode ? darktheme.bg : lighttheme.bg
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          {/* <DarkModeContext.Provider value={{ darkMode, setdarkMode }} > */}
           <ThemeProvider theme={darkMode ? darktheme : lighttheme}>
-            <Container>
-              {/* <Menu darkMode={darkMode} setdarkMode={setdarkMode} /> */}
-              <Main>
-                {/* <NavBar></NavBar> */}
-                <Wrapper>
-                  <Routes>
-                    <Route path='/'>
-                      <Route index element={<Home type="random" />}></Route>
-                      <Route path="trending" element={<Home type="trending" />}></Route>
-                      <Route path="subscribed" element={<Home type="subscribed" />}></Route>
-                      <Route path="video/:videoid" element={<VideoViewPage />}></Route>
-                      <Route path="login" element={<LoginPage />}></Route>
-                      <Route path="signup" element={<SignupForm />}></Route>
-                      <Route path="globalChat" element={<GlobalChat />}></Route>
-                    </Route>
-                  </Routes>
-                </Wrapper>
-              </Main>
-            </Container>
+            <DarkModeContext.Provider value={{ darkMode, setdarkMode }} >
+              <Container>
+                {/* <Menu darkMode={darkMode} setdarkMode={setdarkMode} /> */}
+                <Main>
+                  {/* <NavBar></NavBar> */}
+                  <Wrapper>
+                    <Routes>
+                      <Route path='/'>
+                        <Route index element={<Home type="random" />}></Route>
+                        <Route path="trending" element={<Home type="trending" />}></Route>
+                        <Route path="subscribed" element={<Home type="subscribed" />}></Route>
+                        <Route path="video/:videoid" element={<VideoViewPage />}></Route>
+                        <Route path="login" element={<LoginPage />}></Route>
+                        <Route path="signup" element={<SignupForm />}></Route>
+                        <Route path="globalChat" element={<GlobalChat />}></Route>
+                      </Route>
+                    </Routes>
+                  </Wrapper>
+                </Main>
+              </Container>
+            </DarkModeContext.Provider>
           </ThemeProvider>
-          {/* </DarkModeContext.Provider> */}
         </BrowserRouter>
       </PersistGate>
     </Provider>
   );
 }
-export default App;
+// export default App;
+export { DarkModeContext, App }

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import VideoImg from '../public/videoimg.jpg'
 import ChannelImg from '../public/channelimg.jpg'
 import { format } from 'timeago.js';
 import axios from 'axios';
+import { useContext } from "react";
+import { DarkModeContext } from "../App";
+
 
 const Container = styled.div`
 display:flex;
@@ -51,9 +54,12 @@ const ViewsCount = styled.div`
 const UploadTime = styled.div`
 `
 export default function VideoBox(props) {
-  const [channel, setchannel] = useState({});
   // const [isloading,setloading]=useState(true);
   // const [isError,setError]=useState(false);
+  const [channel, setchannel] = useState({});
+  const { darkMode } = useContext(DarkModeContext);
+  const theme = useTheme();
+
   useEffect(() => {
     // setloading(true);
     async function getchannel() {
@@ -73,11 +79,10 @@ export default function VideoBox(props) {
         <ChannelImage referrerpolicy="no-referrer" src={channel ? channel.img : ChannelImg}>
         </ChannelImage>
 
-
         <ChilDesc>
-          <VideoTitle>{props.videodata.title}</VideoTitle>
-          <ChannelName>{channel ? channel.name : 'channel_name'} <CheckCircleOutlineIcon style={{ fontSize: 'small' }} /></ChannelName>
-          <ViewandTime>
+          <VideoTitle style={{ color: `${darkMode ? theme.text : theme.bg}` }}>{props.videodata.title}</VideoTitle>
+          <ChannelName style={{ color: `${darkMode ? theme.text : theme.bg}` }}>{channel ? channel.name : 'channel_name'} <CheckCircleOutlineIcon style={{ fontSize: 'small' }} /></ChannelName>
+          <ViewandTime style={{ color: `${darkMode ? theme.text : theme.bg}` }}>
             <ViewsCount>{props.videodata.views} views</ViewsCount> •
             <UploadTime>{format(props.videodata.createdAt)}</UploadTime>
           </ViewandTime>
@@ -85,7 +90,6 @@ export default function VideoBox(props) {
         </ChilDesc>
 
       </Description>
-
 
     </Container>
 
